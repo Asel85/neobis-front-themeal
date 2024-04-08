@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const MealDay = () => {
 
@@ -24,19 +25,21 @@ const MealDay = () => {
     <div>
         <Header />
         <div className="home">
-          <section className='random-meal-block'>
-            <div className="random-meal-block__text">
+          <section className='random-meal-block block'>
+            <div className="random-meal-block__text block-text">
               <div className="random-meal-block__title">Meal of the Day</div>
-              <div className="random-meal-block__sub-title">
-                <a href="">{dataMeal.strMeal}</a>
+              <Link to={dataMeal.idMeal}>
+              <div className="random-meal-block__sub-title block__sub-title">
+                {dataMeal.strMeal}
               </div>
+              </Link>
               <div className="random-meal-block__info info">
-                <div className='info__category'>{dataMeal.strCategory}</div>
-                <div className="info__slash"></div>
-                <div className="info__area">{dataMeal.strArea}</div>
+                <div className='info__category category '>{dataMeal.strCategory}</div>
+                <div className="info__slash slash"></div>
+                <div className="info__area area">{dataMeal.strArea}</div>
                 </div>
             </div>
-            <div className="random-meal-block__img">
+            <div className="random-meal-block__img img">
              <img src={dataMeal.strMealThumb} alt={dataMeal.strMeal} />
             </div>
           </section>
