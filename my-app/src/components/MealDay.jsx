@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 const MealDay = () => {
 
     const [dataMeal, setDataMeal] = useState([]);
+    const [searchMeal, setSearchMeal] = useState("");
+    const [searchDataMeal, setSearchDataMeal] = useState([]);
 
     useEffect(()=>{
         const getMeal = async ()=>{
@@ -21,6 +23,20 @@ const MealDay = () => {
         getMeal();
     },[]);
 
+    const getSearchMeal = async (e)=>{
+      e.preventDefault();
+      try{
+        const res = await axios.get(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchMeal}`);
+        if(res.data.meals){
+           setSearchDataMeal(res.data.meals);
+        }else{
+          setSearchDataMeal([]);
+        }
+
+      }catch(error){
+        console.log("error");
+      }
+    }
   return (
     <div>
         <Header />
@@ -44,12 +60,28 @@ const MealDay = () => {
             </div>
           </section>
           <h2>Find your Meal</h2>
-          <form className="search__block">
-          <input type="text" placeholder='Find your Meal'/>
+          <form className="search__block" onSubmit={getSearchMeal}>
+          <input type="text" placeholder='Find your Meal'value={searchMeal} onChange={(e)=>{setSearchMeal(e.target.value)}}/>
           <button type='submit'>Search</button>
           </form>
-        </div>
-        
+          {searchDataMeal && searchDataMeal.map((item)=>
+            (
+                <Link to={item.idMeal}>
+                <div className="search-block">
+                <img src={item.strMealThumb} alt={item.strMeal} className="search-block__img" />
+                <div className="search-block__content">
+                  <div className="search-block__title">{item.strMeal}</div>
+                  <div className="info">
+                    <div className="category">{item.strCategory}</div>
+                    <div className="slash"></div>
+                    <div className="area">{item.strArea}</div>
+                  </div>
+                </div>
+                </div>
+                </Link>
+            )
+          )}
+        </div>    
     </div>
   )
 }

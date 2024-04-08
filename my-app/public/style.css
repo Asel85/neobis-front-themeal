@@ -149,3 +149,16 @@ h2 {
   background-color: red;
   border-radius: 5px;
 }
+.search-block{
+  display: flex;
+  align-items: center;
+  column-gap: 30px;
+  margin-top:40px ;
+}
+.search-block__img{
+  border-radius: 5px;
+}
+.search-block__title{
+  font-size: 2rem;
+  font-weight: 700;
+}
